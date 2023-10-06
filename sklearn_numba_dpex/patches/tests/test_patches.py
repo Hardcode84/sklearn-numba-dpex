@@ -1,6 +1,6 @@
 import dpctl
 import dpctl.tensor as dpt
-import numba_dpex as dpex
+# import numba_dpex as dpex
 import numpy as np
 
 

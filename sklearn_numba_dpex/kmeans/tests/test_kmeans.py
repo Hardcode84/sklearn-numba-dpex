@@ -1,6 +1,6 @@
 import dpctl
 import dpctl.tensor as dpt
-import dpnp
+# import dpnp
 import numpy as np
 import pytest
 from dpctl.tensor import asnumpy
@@ -30,10 +30,9 @@ from sklearn_numba_dpex.testing.config import float_dtype_params
     [
         (np.asarray, False),
         (dpt.asarray, False),
-        (dpnp.asarray, False),
         (dpt.asarray, True),
     ],
-    ids=["numpy", "dpctl", "dpnp", "dpctl+convert"],
+    ids=["numpy", "dpctl", "dpctl+convert"],
 )
 @pytest.mark.parametrize("dtype", float_dtype_params)
 def test_kmeans_same_results(dtype, array_constr, test_attributes_auto_convert):
@@ -328,8 +327,8 @@ def test_kmeans_plusplus_same_quality(dtype):
 @pytest.mark.parametrize("dtype", float_dtype_params)
 @pytest.mark.parametrize(
     "array_constr",
-    [np.asarray, dpt.asarray, dpnp.asarray],
-    ids=["numpy", "dpctl", "dpnp"],
+    [np.asarray, dpt.asarray],
+    ids=["numpy", "dpctl"],
 )
 def test_kmeans_plusplus_output(array_constr, dtype):
     """Test adapted from sklearn's test_kmeans_plusplus_output"""

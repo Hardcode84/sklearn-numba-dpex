@@ -36,7 +36,7 @@ classifiers = [
 dependencies = [
     "scikit-learn",
     "array_api_compat",
-    "numba-dpex>=0.20.0dev3",
+    # "numba-dpex>=0.20.0dev3",
     "dpctl>=0.14.1dev2",
 ]
 

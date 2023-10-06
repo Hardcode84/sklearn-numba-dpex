@@ -5,13 +5,13 @@ from typing import Any, Dict
 
 import dpctl
 import dpctl.tensor as dpt
-import dpnp
+# import dpnp
 import numpy as np
 import scipy.sparse as sp
 import sklearn
 import sklearn.utils.validation as sklearn_validation
-from sklearn.cluster._kmeans import KMeansCythonEngine
-from sklearn.exceptions import NotSupportedByEngineError
+# from sklearn.cluster._kmeans import KMeansCythonEngine
+# from sklearn.exceptions import NotSupportedByEngineError
 from sklearn.utils import check_array, check_random_state
 from sklearn.utils.validation import _is_arraylike_not_scalar
 
@@ -33,7 +33,7 @@ class _DeviceUnset:
     pass
 
 
-class KMeansEngine(KMeansCythonEngine):
+class KMeansEngine:
     """GPU optimized implementation of Lloyd's k-means.
 
     The current implementation is called "fused fixed", it consists in a sliding window

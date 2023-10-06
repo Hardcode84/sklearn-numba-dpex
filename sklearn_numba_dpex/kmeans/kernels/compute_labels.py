@@ -1,7 +1,7 @@
 import math
 from functools import lru_cache
 
-import numba_dpex as dpex
+# import numba_dpex as dpex
 import numpy as np
 
 from sklearn_numba_dpex.common._utils import _check_max_work_group_size

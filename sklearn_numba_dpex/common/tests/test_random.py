@@ -2,7 +2,8 @@ import math
 from functools import lru_cache
 
 import dpctl.tensor as dpt
-import numba_dpex as dpex
+# import numba_dpex as dpex
+from .. import decorators as dpex
 import numpy as np
 import pytest
 from sklearn.utils._testing import assert_allclose

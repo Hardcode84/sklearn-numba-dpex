@@ -3,7 +3,8 @@ from functools import lru_cache
 
 import dpctl
 import dpctl.tensor as dpt
-import numba_dpex as dpex
+# import numba_dpex as dpex
+from . import decorators as dpex
 import numpy as np
 from numba import float32, float64, int64, uint32, uint64
 

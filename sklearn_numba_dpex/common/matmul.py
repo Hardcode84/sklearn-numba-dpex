@@ -1,7 +1,8 @@
 import math
 from functools import lru_cache
 
-import numba_dpex as dpex
+# import numba_dpex as dpex
+from . import decorators as dpex
 import numpy as np
 
 from sklearn_numba_dpex.common._utils import _enforce_matmul_like_work_group_geometry
@@ -297,10 +298,10 @@ def make_matmul_2d_kernel(
         )
 
         # Allocate shared memory for the two sliding windows on `X` and `Y_t`
-        local_X_sliding_window = dpex.local.array(
+        local_X_sliding_window = dpex.local_array(
             shape=local_X_sliding_window_shape, dtype=dtype
         )
-        local_Y_t_sliding_window = dpex.local.array(
+        local_Y_t_sliding_window = dpex.local_array(
             shape=local_Y_t_sliding_window_shape, dtype=dtype
         )
 
@@ -308,12 +309,12 @@ def make_matmul_2d_kernel(
         # zero values
 
         # Allocate private memory for the result window
-        private_result = dpex.private.array(
+        private_result = dpex.private_array(
             shape=thread_private_result_array_shape, dtype=dtype
         )
 
         # Allocate private memory for the private sliding window on Y_t
-        private_Y_t_sliding_window = dpex.private.array(
+        private_Y_t_sliding_window = dpex.private_array(
             shape=private_Y_t_sliding_window_shape, dtype=dtype
         )
 
@@ -330,6 +331,9 @@ def make_matmul_2d_kernel(
         first_private_loaded_sliding_Y_t_value_idx = (
             work_item_idx % nb_work_items_for_Y_t_window
         )
+
+        _initialize_private_result(private_result)
+        # private_result[:] = 0
 
         work_item_col_idx_padded = two_as_long * work_item_col_idx
         first_X_loaded_row_idx = group_first_row_idx + work_item_row_idx
@@ -374,6 +378,12 @@ def make_matmul_2d_kernel(
             # OUT
             result
         )
+
+    @dpex.func
+    def _initialize_private_result(private_result):
+        for i in range(private_result_array_height):
+            for j in range(private_result_array_width):
+                private_result[i, j] = zero
 
     # HACK 906: see sklearn_numba_dpex.patches.tests.test_patches.test_need_to_workaround_numba_dpex_906  # noqa
     @dpex.func
