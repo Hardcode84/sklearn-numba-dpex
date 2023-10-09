@@ -191,7 +191,7 @@ def _make_rand_uniform_kernel(size, dtype, size_per_work_item):
         item_idx = dpex.get_global_id(0)
         out_idx = item_idx * size_per_work_item
 
-        private_states = dpex.private.array(shape=private_states_shape, dtype=np.uint64)
+        private_states = dpex.private_array(shape=private_states_shape, dtype=np.uint64)
         private_states[0, 0] = states[item_idx, 0]
         private_states[0, 1] = states[item_idx, 1]
 
