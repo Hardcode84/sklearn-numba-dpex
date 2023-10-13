@@ -5,3 +5,5 @@ from numba_mlir.kernel import *
 
 local_array = local.array
 private_array = private.array
+
+atomic_add = atomic.add

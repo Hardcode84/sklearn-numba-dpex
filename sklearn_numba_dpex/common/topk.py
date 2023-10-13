@@ -953,7 +953,7 @@ def _make_create_radix_histogram_kernel(
         privatization_idx = (col_idx // work_group_size) % n_counts_private_copies
 
         if local_subgroup == zero_idx:
-            dpex.atomic.add(
+            dpex.atomic_add(
                 privatized_counts,
                 (privatization_idx, row_idx, local_subgroup_work_id),
                 local_counts[zero_idx, local_subgroup_work_id],
@@ -1075,7 +1075,7 @@ def _make_check_radix_histogram_kernel(radix_size, dtype, work_group_size):
             desired_masked_value_ = lexicographical_unmapping(desired_masked_value_)
 
         else:
-            new_active_row_idx = dpex.atomic.add(
+            new_active_row_idx = dpex.atomic_add(
                 new_n_active_rows, zero_idx, count_one_as_an_int
             )
             new_active_rows_mapping[new_active_row_idx] = row_idx
@@ -1207,7 +1207,7 @@ def _make_gather_topk_kernel(
         item = array_in[row_idx, col_idx]
 
         if item >= threshold:
-            result_col_idx_ = dpex.atomic.add(
+            result_col_idx_ = dpex.atomic_add(
                 result_col_idx, row_idx, count_one_as_an_int)
             result[row_idx, result_col_idx_] = item
 
@@ -1241,7 +1241,7 @@ def _make_gather_topk_kernel(
         if item <= threshold:
             return
 
-        result_col_idx_ = dpex.atomic.add(result_col_idx, row_idx, count_one_as_an_int)
+        result_col_idx_ = dpex.atomic_add(result_col_idx, row_idx, count_one_as_an_int)
         result[row_idx, result_col_idx_] = item
 
     return gather_topk[global_shape, work_group_shape]
@@ -1317,7 +1317,7 @@ def _make_gather_topk_idx_kernel(
         item = array_in[row_idx, col_idx]
 
         if item >= threshold:
-            result_col_idx_ = dpex.atomic.add(
+            result_col_idx_ = dpex.atomic_add(
                 result_col_idx, row_idx, count_one_as_an_int)
             result[row_idx, result_col_idx_] = col_idx
 
@@ -1345,7 +1345,7 @@ def _make_gather_topk_idx_kernel(
             return
 
         if item > threshold:
-            result_col_idx_ = dpex.atomic.add(
+            result_col_idx_ = dpex.atomic_add(
                 result_col_idx, row_idx, count_one_as_an_int
             )
             result[row_idx, result_col_idx_] = col_idx
@@ -1358,7 +1358,7 @@ def _make_gather_topk_idx_kernel(
             n_threshold_occurences, row_idx, count_one_as_an_int)
 
         if remaining_n_threshold_occurences > zero_idx:
-            result_col_idx_ = dpex.atomic.add(
+            result_col_idx_ = dpex.atomic_add(
                 result_col_idx, row_idx, count_one_as_an_int
             )
             result[row_idx, result_col_idx_] = col_idx
