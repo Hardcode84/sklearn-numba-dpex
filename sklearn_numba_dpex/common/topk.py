@@ -677,14 +677,14 @@ def _make_create_radix_histogram_kernel(
         # Initialize the shared memory in the work group
         # NB: for clarity in the code, two variables refer to the same buffer. The
         # buffer will indeed be used twice for different purposes each time.
-        radix_values = local_counts = dpex.local.array(
+        radix_values = local_counts = dpex.local_array(
             local_counts_size, dtype=histogram_dtype
         )
 
         # Initialize private memory
         # NB: private arrays are assumed to be created already initialized with
         # zero values
-        private_counts = dpex.private.array(sub_group_size, dtype=histogram_dtype)
+        private_counts = dpex.private_array(sub_group_size, dtype=histogram_dtype)
 
         # Compute the radix value of `array_in_uint` at location `(row_idx, col_idx)`,
         # and store it in `radix_values[local_subgroup, local_subgroup_work_id]`. If
