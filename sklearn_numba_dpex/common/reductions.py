@@ -552,7 +552,7 @@ def _make_partial_sum_reduction_2d_axis0_kernel(
         # position of the window in the grid of windows, and by the local position of
         # the work item in the 2D index):
         col_idx = (
-            (dpex.get_group_id(zero) * sub_group_size) + local_col_idx
+            (dpex.get_group_id(zero_idx) * sub_group_size) + local_col_idx
         )
 
         sum_axis_size = summands.shape[zero_idx]
