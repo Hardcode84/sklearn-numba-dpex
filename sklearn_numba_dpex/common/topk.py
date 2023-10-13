@@ -1360,7 +1360,7 @@ def _make_gather_topk_idx_kernel(
         if n_threshold_occurences[row_idx] <= zero_idx:
             return
 
-        remaining_n_threshold_occurences = dpex.atomic.sub(
+        remaining_n_threshold_occurences = dpex.atomic_sub(
             n_threshold_occurences, row_idx, count_one_as_an_int)
 
         if remaining_n_threshold_occurences > zero_idx:

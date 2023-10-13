@@ -7,3 +7,4 @@ local_array = local.array
 private_array = private.array
 
 atomic_add = atomic.add
+atomic_sub = atomic.sub
