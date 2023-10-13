@@ -63,8 +63,8 @@ def make_argmin_reduction_1d_kernel(size, device, dtype, work_group_size="max"):
         current_size = (previous_result_size if has_previous_result
                         else values.shape[zero_idx])
 
-        local_argmin = dpex.local.array(work_group_size, dtype=local_argmin_dtype)
-        local_values = dpex.local.array(work_group_size, dtype=dtype)
+        local_argmin = dpex.local_array(work_group_size, dtype=local_argmin_dtype)
+        local_values = dpex.local_array(work_group_size, dtype=dtype)
 
         _prepare_local_memory(
             local_work_id,
@@ -546,7 +546,7 @@ def _make_partial_sum_reduction_2d_axis0_kernel(
         # local memory of size (n_sub_groups_per_work_group, sub_group_size) (i.e one
         # slot for each work item and two items in the window), and yet again
         # contiguous work items write into contiguous slots.
-        local_values = dpex.local.array(local_values_size, dtype=dtype)
+        local_values = dpex.local_array(local_values_size, dtype=dtype)
 
         # The current work item use the following second coordinate (given by the
         # position of the window in the grid of windows, and by the local position of
@@ -784,7 +784,7 @@ def _make_partial_sum_reduction_2d_axis1_kernel(
         augend_idx = first_value_idx + local_work_id
         addend_idx = first_value_idx + work_group_size + local_work_id
 
-        local_values = dpex.local.array(work_group_size, dtype=dtype)
+        local_values = dpex.local_array(work_group_size, dtype=dtype)
 
         _prepare_local_memory(
             local_work_id,
