@@ -855,7 +855,7 @@ def _make_create_radix_histogram_kernel(
         ):
             # fmt: on
             if is_histogram_item:
-                current_subgroup = local_subgroup
+                current_subgroup = np.int64(local_subgroup)
                 current_col_idx = col_idx
                 for _ in range(sub_group_size):
                     if current_col_idx < n_cols:
@@ -913,7 +913,7 @@ def _make_create_radix_histogram_kernel(
     ):
         # fmt: on
         if is_histogram_item:
-            col_idx = local_subgroup_work_id
+            col_idx = np.int64(local_subgroup_work_id)
             starting_row_idx = local_subgroup * sub_group_size
 
             # The following indexing enable nicer memory RW patterns since it ensures
