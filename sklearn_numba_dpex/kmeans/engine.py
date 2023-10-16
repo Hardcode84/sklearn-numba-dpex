@@ -10,8 +10,8 @@ import numpy as np
 import scipy.sparse as sp
 import sklearn
 import sklearn.utils.validation as sklearn_validation
-# from sklearn.cluster._kmeans import KMeansCythonEngine
-# from sklearn.exceptions import NotSupportedByEngineError
+from sklearn.cluster._kmeans import KMeansCythonEngine
+from sklearn.exceptions import NotSupportedByEngineError
 from sklearn.utils import check_array, check_random_state
 from sklearn.utils.validation import _is_arraylike_not_scalar
 
@@ -33,7 +33,7 @@ class _DeviceUnset:
     pass
 
 
-class KMeansEngine:
+class KMeansEngine(KMeansCythonEngine):
     """GPU optimized implementation of Lloyd's k-means.
 
     The current implementation is called "fused fixed", it consists in a sliding window
@@ -291,8 +291,8 @@ class KMeansEngine:
         return euclidean_distances
 
     def _validate_data(self, X, reset=True):
-        if isinstance(X, dpnp.ndarray):
-            X = X.get_array()
+        # if isinstance(X, dpnp.ndarray):
+        #     X = X.get_array()
 
         if self.device is not _DeviceUnset:
             device = dpctl.SyclDevice(self.device)
