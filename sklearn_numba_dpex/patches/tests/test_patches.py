@@ -27,7 +27,7 @@ def test_need_to_workaround_numba_dpex_906():
     @dpex.kernel
     def kernel(result):
         local_idx = dpex.get_local_id(0)
-        local_values = dpex.local.array((1,), dtype=dtype)
+        local_values = dpex.local_array((1,), dtype=dtype)
 
         if local_idx < 1:
             local_values[0] = 1
@@ -52,7 +52,7 @@ def test_need_to_workaround_numba_dpex_906():
     @dpex.kernel
     def kernel(result):
         local_idx = dpex.get_local_id(0)
-        local_values = dpex.local.array((1,), dtype=dtype)
+        local_values = dpex.local_array((1,), dtype=dtype)
 
         _setitem_if((local_idx < 1), 0, 1, local_values)
 

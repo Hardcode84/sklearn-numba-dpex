@@ -208,19 +208,19 @@ def make_lloyd_single_step_fixed_window_kernel(
         # loaded and used by all work items in the work group to compute partial
         # results. The array slides over the features in the outer loop, and over the
         # samples in the inner loop.
-        centroids_window = dpex.local.array(shape=centroids_window_shape, dtype=dtype)
+        centroids_window = dpex.local_array(shape=centroids_window_shape, dtype=dtype)
 
         # This array in shared memory is used as a sliding array over the centroids.
         # It contains values of centroids_half_l2_norm for each centroid in the sliding
         # centroids_window array. It is updated once per iteration in the outer loop.
-        window_of_centroids_half_l2_norms = dpex.local.array(
+        window_of_centroids_half_l2_norms = dpex.local_array(
             shape=window_n_centroids, dtype=dtype
         )
 
         # In the inner loop each work item accumulates in private memory the
         # dot product of the sample at the sample_idx relatively to each centroid
         # in the window.
-        dot_products = dpex.private.array(shape=window_n_centroids, dtype=dtype)
+        dot_products = dpex.private_array(shape=window_n_centroids, dtype=dtype)
 
         first_centroid_idx = zero_idx
 

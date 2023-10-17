@@ -164,8 +164,8 @@ def make_kmeansplusplus_single_step_fixed_window_kernel(
     ):
         # fmt: on
 
-        candidates_window = dpex.local.array(shape=candidates_window_shape, dtype=dtype)
-        sq_distances = dpex.private.array(shape=window_n_candidates, dtype=dtype)
+        candidates_window = dpex.local_array(shape=candidates_window_shape, dtype=dtype)
+        sq_distances = dpex.private_array(shape=window_n_candidates, dtype=dtype)
 
         first_candidate_idx = zero_idx
 

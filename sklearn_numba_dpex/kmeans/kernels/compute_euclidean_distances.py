@@ -71,9 +71,9 @@ def make_compute_euclidean_distances_fixed_window_kernel(
     ):
         # fmt: on
 
-        centroids_window = dpex.local.array(shape=centroids_window_shape, dtype=dtype)
+        centroids_window = dpex.local_array(shape=centroids_window_shape, dtype=dtype)
 
-        sq_distances = dpex.private.array(shape=window_n_centroids, dtype=dtype)
+        sq_distances = dpex.private_array(shape=window_n_centroids, dtype=dtype)
 
         first_centroid_idx = zero_idx
 

@@ -90,11 +90,11 @@ def make_label_assignment_fixed_window_kernel(
             + local_col_idx
         )
 
-        centroids_window = dpex.local.array(shape=centroids_window_shape, dtype=dtype)
-        window_of_centroids_half_l2_norms = dpex.local.array(
+        centroids_window = dpex.local_array(shape=centroids_window_shape, dtype=dtype)
+        window_of_centroids_half_l2_norms = dpex.local_array(
             shape=window_n_centroids, dtype=dtype
         )
-        dot_products = dpex.private.array(shape=window_n_centroids, dtype=dtype)
+        dot_products = dpex.private_array(shape=window_n_centroids, dtype=dtype)
 
         first_centroid_idx = zero_idx
 
