@@ -402,14 +402,14 @@ def make_lloyd_single_step_fixed_window_kernel(
         privatization_idx = sub_group_idx % n_centroids_private_copies
         weight = sample_weight[sample_idx]
 
-        dpex.atomic.add(
+        dpex.atomic_add(
             cluster_sizes_private_copies,
             (privatization_idx, min_idx),
             weight
         )
 
         for feature_idx in range(n_features):
-            dpex.atomic.add(
+            dpex.atomic_add(
                 new_centroids_t_private_copies,
                 (privatization_idx, feature_idx, min_idx),
                 X_t[feature_idx, sample_idx] * weight,

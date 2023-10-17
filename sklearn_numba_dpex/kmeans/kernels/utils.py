@@ -53,7 +53,7 @@ def make_relocate_empty_clusters_kernel(
         # Cancel the contribution to new_location_previous_assignment, the previously
         # updated centroids of the sample. This contribution will be assigned to the
         # centroid of the clusters that relocates to this sample.
-        dpex.atomic.sub(
+        dpex.atomic_sub(
             centroids_t,
             (feature_idx, new_location_previous_assignment),
             X_centroid_addend
@@ -67,7 +67,7 @@ def make_relocate_empty_clusters_kernel(
         # `feature_idx`'s value.
         if feature_idx == zero_idx:
             per_sample_inertia[new_location_X_idx] = zero
-            dpex.atomic.sub(
+            dpex.atomic_sub(
                 cluster_sizes,
                 new_location_previous_assignment,
                 new_location_weight
@@ -162,7 +162,7 @@ def make_reduce_centroid_data_kernel(
 
         # register empty clusters
         if sum_ == zero:
-            current_n_empty_clusters = dpex.atomic.add(
+            current_n_empty_clusters = dpex.atomic_add(
                 n_empty_clusters, zero_idx, one_incr
             )
             empty_clusters_list[current_n_empty_clusters] = cluster_idx
@@ -272,9 +272,9 @@ def make_get_nb_distinct_clusters_kernel(
         if clusters_seen[label] > zero_idx:
             return
 
-        previous_value = dpex.atomic.add(clusters_seen, label, one_incr)
+        previous_value = dpex.atomic_add(clusters_seen, label, one_incr)
         if previous_value == zero_idx:
-            dpex.atomic.add(nb_distinct_clusters, zero_idx, one_incr)
+            dpex.atomic_add(nb_distinct_clusters, zero_idx, one_incr)
 
     global_size = math.ceil(n_samples / work_group_size) * work_group_size
     return get_nb_distinct_clusters[global_size, work_group_size]

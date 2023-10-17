@@ -312,7 +312,7 @@ class _KMeansKernelFuncFactory:
                         # any conflicts between threads.
                         # see https://github.com/IntelPython/numba-dpex/issues/1106
                         if is_cpu:
-                            dpex.atomic.add(
+                            dpex.atomic_add(
                                 result, window_centroid_idx, increment
                             )
 
