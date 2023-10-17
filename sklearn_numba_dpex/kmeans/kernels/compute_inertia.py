@@ -2,6 +2,7 @@ import math
 from functools import lru_cache
 
 # import numba_dpex as dpex
+from .. import decorators as dpex
 import numpy as np
 
 

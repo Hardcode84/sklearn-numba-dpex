@@ -1,4 +1,5 @@
 # import numba_dpex as dpex
+from .. import decorators as dpex
 import numpy as np
 
 zero_as_a_long = np.int64(0)

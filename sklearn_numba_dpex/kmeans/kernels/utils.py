@@ -3,6 +3,7 @@ from functools import lru_cache
 
 import dpctl.tensor as dpt
 # import numba_dpex as dpex
+from .. import decorators as dpex
 import numpy as np
 
 zero_idx = np.int64(0)
